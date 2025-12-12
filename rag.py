@@ -102,22 +102,22 @@ class RAG:
     def format_docs(self, docs):
         return "\n\n".join(doc.page_content for doc in docs)
     
-    def create_retrieval_chain(self):
-        self.load_docs_into_vectorstore_chain()
-        self.retriever = self.vectorstore.as_retriever()
-        self.rag_chain = (
-            {
-                "context": self.retriever | self.format_docs, "question": RunnablePassthrough()
-            }
-            | self.rag_prompt
-            | self.groq_llm
-            | StrOutputParser()
-        )
-        self.rag_chain = self.guardrails | self.rag_chain
+    # def create_retrieval_chain(self):
+    #     self.load_docs_into_vectorstore_chain()
+    #     self.retriever = self.vectorstore.as_retriever()
+    #     self.rag_chain = (
+    #         {
+    #             "context": self.retriever | self.format_docs, "question": RunnablePassthrough()
+    #         }
+    #         | self.rag_prompt
+    #         | self.groq_llm
+    #         | StrOutputParser()
+    #     )
+    #     self.rag_chain = self.guardrails | self.rag_chain
     
-    def qa(self, query, vectorstore_created):
-        if vectorstore_created:
-            pass
-        else:
-            self.create_retrieval_chain()
-        return self.rag_chain.invoke(query), True
+    # def qa(self, query, vectorstore_created):
+    #     if vectorstore_created:
+    #         pass
+    #     else:
+    #         self.create_retrieval_chain()
+    #     return self.rag_chain.invoke(query), True
